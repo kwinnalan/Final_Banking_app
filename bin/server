@@ -1,0 +1,4 @@
+(() => {
+    const APP = require('../app1.js');
+    new APP();
+})();

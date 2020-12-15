@@ -1,0 +1,53 @@
+<% include public/views/header.ejs %>
+<div id="login">
+<div>
+    <div id="epLogo">
+        <img src="public/images/icon.512.png" alt="Exponential Banking Logo">
+    </div>
+</div>
+<form class="was-validated">
+    <div class="form-group">
+        <label for="uname">Username:</label>
+        <input type="text" autocomplete="username" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+    </div>
+    <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" autocomplete="current-password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+    </div>
+    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+</form>
+</div>
+
+<div id="welcomePage" style="display: none">
+    <h1 id="welcomeUsername"></h1>
+<aside id="checkingSection">
+    <h3>Checking Account</h3>
+    <h3 id="checkingAccount"></h3>
+    <button id="moreSavings" type="button" class="btn btn-primary" >More</button>
+</aside>
+    <aside id="savingsSection">
+    <h3>Savings Account</h3>
+    <h3 id="savingsAccount"></h3>
+        <button id="moreChecking" type="button" class="btn btn-primary" >More</button>
+    </aside>
+
+</div>
+
+
+
+
+
+
+    <div id="installBanner">
+        <div class="grid-x grid-padding-x grid-padding-y">
+            <div class="cell small-12 large-12 text-center">
+                <input type="submit" class="button large expanded bdh-btn" id="installButton" value="Install to Homescreen">
+            </div>
+        </div>
+    </div>
+
+
+
+
+<% include public/views/footer.ejs %>
+

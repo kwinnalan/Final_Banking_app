@@ -1,0 +1,25 @@
+{
+  "name": "final_banking_app",
+  "version": "1.0.0",
+  "description": "Banking app for my final project, CIS 141",
+  "main": "bin/server",
+  "scripts": {
+    "start": "node bin/server"
+  },
+  "keywords": [],
+  "author": "Kwinn Danforth",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "formidable": "^1.1.1",
+    "nedb": "^1.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwinnalan/Final_Banking_app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kwinnalan/Final_Banking_app/issues"
+  },
+  "homepage": "https://github.com/kwinnalan/Final_Banking_app#readme"
+}
