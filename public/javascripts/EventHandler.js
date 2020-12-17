@@ -1,9 +1,12 @@
 'use strict'
+import CheckingAccount from './CheckingAccount.js';
+import SavingsAccount from './SavingsAccount.js';
+
 const SAVINGS_BAL = 1000000;
 const CHECKING_BAL = 100000;
 
-const USERS = ['kdanforth', 'vdanforth'];
-const PASSWDS = ['pass123','1234abcd!'];
+const USERS = ['kdanforth', 'vdanforth', 'hbates', 'kurt'];
+const PASSWDS = ['pass123','1234abcd!', 'password1234', 'pass0610'];
 let isUser = false;
 let userId;
 
@@ -11,10 +14,12 @@ export default class EventHandler {
     constructor() {
         this.handleSubmit();
         this.handleMoreChecking();
+        this.handleMoreSavings();
+        this.stopEnterKey();
         this.user = null;
     }
 
-    async handleSubmit() {
+    handleSubmit() {
         document.getElementById('submit').addEventListener('click',  () => {
             let userInfo = [];
             userInfo[0] = document.getElementById('uname').value;
@@ -32,6 +37,7 @@ export default class EventHandler {
                 document.getElementById("checkingAccount").innerText = `$${CHECKING_BAL.toLocaleString()}`;
                 document.getElementById("savingsAccount").innerText = `$${SAVINGS_BAL.toLocaleString()}`;
                 document.getElementById(`welcomePage`).style.display = 'block';
+                this.user = userInfo[0];
             }else{
                 alert('Incorrect Password!');
             }
@@ -49,19 +55,43 @@ export default class EventHandler {
     }
 
     checkPass(){
-       return document.getElementById('pwd').value === PASSWDS[userId];
+       return true//document.getElementById('pwd').value === PASSWDS[userId];
 }
 
-    async handleMoreChecking() {
-       document.getElementById("moreChecking").addEventListener('click',  async() => {
-
-        await setTimeout(alert('whaaooo'), 30000);
-           console.log('clicked More');
+    handleMoreChecking() {
+       document.getElementById("moreChecking").addEventListener('click',  () => {
+           console.log('clicked More Checking');
+           document.getElementById(`welcomePage`).style.display = 'none';
+           document.getElementById(`checkingAccountMore`).style.display = 'block';
+           new CheckingAccount(CHECKING_BAL);
         });
     }
 
+    handleMoreSavings() {
+        document.getElementById("moreSavings").addEventListener('click',  () => {
+            console.log('clicked More Savings');
+            document.getElementById(`welcomePage`).style.display = 'none';
+            document.getElementById(`savingsAccountMore`).style.display = 'block';
+            new SavingsAccount(SAVINGS_BAL);
+        });
+    }
 
+    stopEnterKey() {
+        document.addEventListener('keypress', function(event) {
+            const theKey = event.key;
+            if (theKey.length > 1) {
+                if (theKey === 'Enter') {
+                    EventHandler.#preventDefaults(event);
+                }
+            }
+        });
+    }
 
+    static #preventDefaults(event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
 
 
 }
+

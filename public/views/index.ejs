@@ -20,20 +20,39 @@
 
 <div id="welcomePage" style="display: none">
     <h1 id="welcomeUsername"></h1>
-<aside id="checkingSection">
+<aside class="accountSec" id="checkingSection">
     <h3>Checking Account</h3>
     <h3 id="checkingAccount"></h3>
-    <button id="moreSavings" type="button" class="btn btn-primary" >More</button>
+    <button id="moreChecking" type="button" class="moreBtn" >More</button>
 </aside>
-    <aside id="savingsSection">
+    <aside class="accountSec" id="savingsSection">
     <h3>Savings Account</h3>
     <h3 id="savingsAccount"></h3>
-        <button id="moreChecking" type="button" class="btn btn-primary" >More</button>
+        <button id="moreSavings" type="button" class="moreBtn" >More</button>
     </aside>
-
 </div>
 
+<div id="checkingAccountMore" style="display: none">
+    <h1 class="accountHeading">Checking Account</h1>
+    <h2 class="accounts" id="checkingAccount1"></h2>
+    <input type="number" class="amountInput" id="checkAmountInput" placeholder="Enter Amount $">
+    <button id="checkingTransferBtn" type="button" class="transferBtn" >Transfer</button>
+    <button id="checkingDepBtn" type="button" class="depBtn" >Deposit</button>
+    <button id="checkingWithBtn" type="button" class="withBtn" >Withdraw</button>
+    <button id="checkingDebBtn" type="button" class="debBtn" >Debit</button>
+    <h3 class="transList" id="checkTransList"></h3>
+</div>
 
+<div id="savingsAccountMore" style="display: none">
+    <h1 class="accountHeading">Savings Account</h1>
+    <h2 class="accounts" id="savingsAccount1"></h2>
+    <input type="number" class="amountInput" id="saveAmountInput" placeholder="Enter Amount $">
+    <button id="savingsTransferBtn" type="button" class="transferBtn" >Transfer</button>
+    <button id="savingsDepBtn" type="button" class="depBtn" >Deposit</button>
+    <button id="savingsWithBtn" type="button" class="withBtn" >Withdraw</button>
+    <button id="savingsDebBtn" type="button" class="debBtn" >Debit</button>
+    <h3 class="transList" id="saveTransList"></h3>
+</div>
 
 
 

@@ -29,16 +29,31 @@ text-align: center;
     margin-top: 1em;
 }
 
+#welcomePage, h1{
+    font-family: "Californian FB";
+}
+#welcomeUsername{
+    text-shadow: 2px 2px 5px lightseagreen;
+}
+
 #checkingSection {
+    box-shadow: 10px 10px 5px grey;
     float: right;
-    margin-right: 3em;
+    margin-right: 4em;
+    border: 3px solid lightseagreen;
+    padding: 2em .75em;
 }
 
 #savingsSection {
+    box-shadow: 10px 10px 5px grey;
     float: left;
-    margin-left: 3em;
+    margin-left: 4em;
+    border: 3px solid lightseagreen;
+    padding: 2em 1em;
 }
-
+.accountHeading{
+    text-shadow: 2px 2px 5px lightseagreen;
+}
 
 @media only screen and (max-width: 567px) {
     #epLogo{
@@ -47,11 +62,22 @@ text-align: center;
     #checkingSection {
         float: none;
         margin-right: auto;
-        margin-top: 25%;
+        margin-top: 20%;
+        margin-bottom: 20%;
+        padding: unset;
     }
     #savingsSection {
-        margin-left: auto;
-        margin-top: 25%;
         float: none;
+        margin-left: auto;
+        margin-top: 20%;
+        margin-bottom: 20%;
+        padding: unset;
+    }
+    .moreBtn {
+        margin-bottom: 1em;
+    }
+    .amountInput{
+        width: 95%;
+        margin-bottom: 1em;
     }
 }
