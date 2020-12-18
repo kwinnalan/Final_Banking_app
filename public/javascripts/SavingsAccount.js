@@ -32,6 +32,10 @@ let amount;
                 amount = parseFloat(input);
                 this.transfer(amount);
             });
+            document.getElementById('saveBackBtn').addEventListener('click',  () => {
+                console.log("clicked go back");
+                this.goBack();
+            });
 
         }
 
@@ -44,27 +48,51 @@ let amount;
         }
 
         debit(amount) {
-            savingsBal = savingsBal - amount;
-            saveTrans.push(`Debit: -$${amount}`);
-            let currIndex = saveTrans.length - 1;
-            document.getElementById("savingsAccount1").innerText = `Balance $${savingsBal.toLocaleString()}`;
-            document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+            if (savingsBal >= amount) {
+                savingsBal = savingsBal - amount;
+                saveTrans.push(`Debit: -$${amount}`);
+                let currIndex = saveTrans.length - 1;
+                document.getElementById("savingsAccount1").innerText = `Balance $${savingsBal.toLocaleString()}`;
+                document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+            } else {
+                saveTrans.push(`!Debit: -$${amount} not aloud, insufficient funds!`);
+                let currIndex = saveTrans.length - 1;
+                document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+            }
         }
 
 
         withdraw(amount) {
-            savingsBal = savingsBal - amount;
-            saveTrans.push(`Withdraw: -$${amount}`);
-            let currIndex = saveTrans.length - 1;
-            document.getElementById("savingsAccount1").innerText = `Balance $${savingsBal.toLocaleString()}`;
-            document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+                if(savingsBal >= amount){
+                    savingsBal = savingsBal - amount;
+                    saveTrans.push(`Withdraw: -$${amount}`);
+                    let currIndex = saveTrans.length - 1;
+                    document.getElementById("savingsAccount1").innerText = `Balance $${savingsBal.toLocaleString()}`;
+                    document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+                } else {
+                    saveTrans.push(`!Withdraw: -$${amount} not aloud, insufficient funds!`);
+                    let currIndex = saveTrans.length - 1;
+                    document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+                }
         }
 
         transfer(amount) {
-            savingsBal = savingsBal - amount;
-            saveTrans.push(`Transfer: -$${amount}`);
-            let currIndex = saveTrans.length - 1;
-            document.getElementById("savingsAccount1").innerText = `Balance $${savingsBal.toLocaleString()}`;
-            document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+                if(savingsBal >= amount){
+                    savingsBal = savingsBal - amount;
+                    saveTrans.push(`Transfer: -$${amount}`);
+                    let currIndex = saveTrans.length - 1;
+                    document.getElementById("savingsAccount1").innerText = `Balance $${savingsBal.toLocaleString()}`;
+                    document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+                } else {
+                    saveTrans.push(`!Transfer: -$${amount} not aloud, insufficient funds!`);
+                    let currIndex = saveTrans.length - 1;
+                    document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
+                }
+        }
+
+        goBack(){
+            console.log("in go back");
+            document.getElementById(`welcomePage`).style.display = 'block';
+            document.getElementById(`savingsAccountMore`).style.display = 'none';
         }
     }

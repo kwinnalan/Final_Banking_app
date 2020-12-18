@@ -55,7 +55,7 @@ export default class EventHandler {
     }
 
     checkPass(){
-       return true//document.getElementById('pwd').value === PASSWDS[userId];
+       return document.getElementById('pwd').value === PASSWDS[userId];
 }
 
     handleMoreChecking() {

@@ -1,5 +1,7 @@
 'use strict'
 
+import EventHandler from './EventHandler.js';
+
 let checkingBal;
 let checkTrans = ["Deposit: +$100,000"];
 let amount;
@@ -32,6 +34,10 @@ export default class CheckingAccount {
             amount = parseFloat(input);
             this.transfer(amount);
         });
+        document.getElementById('checkBackBtn').addEventListener('click',  () => {
+            console.log("clicked go back");
+            this.goBack();
+        });
 
     }
 
@@ -43,26 +49,51 @@ export default class CheckingAccount {
         document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
 }
     debit(amount){
-        checkingBal = checkingBal - amount;
-        checkTrans.push(`Debit: -$${amount}`);
-        let currIndex = checkTrans.length - 1;
-        document.getElementById("checkingAccount1").innerText = `Balance $${checkingBal.toLocaleString()}`;
-        document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        if(checkingBal >= amount){
+            checkingBal = checkingBal - amount;
+            checkTrans.push(`Debit: -$${amount}`);
+            let currIndex = checkTrans.length - 1;
+            document.getElementById("checkingAccount1").innerText = `Balance $${checkingBal.toLocaleString()}`;
+            document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        } else {
+            checkTrans.push(`!Debit: -$${amount} not aloud, insufficient funds!`);
+            let currIndex = checkTrans.length - 1;
+            document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        }
     }
 
 
     withdraw(amount){
-    checkingBal = checkingBal - amount;
-    checkTrans.push(`Withdraw: -$${amount}`);
-    let currIndex = checkTrans.length - 1;
-    document.getElementById("checkingAccount1").innerText = `Balance $${checkingBal.toLocaleString()}`;
-    document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        if(checkingBal >= amount){
+            checkingBal = checkingBal - amount;
+            checkTrans.push(`Withdraw: -$${amount}`);
+            let currIndex = checkTrans.length - 1;
+            document.getElementById("checkingAccount1").innerText = `Balance $${checkingBal.toLocaleString()}`;
+            document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        } else {
+            checkTrans.push(`!Withdraw: -$${amount} not aloud, insufficient funds!`);
+            let currIndex = checkTrans.length - 1;
+            document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        }
     }
     transfer(amount){
-        checkingBal = checkingBal - amount;
-        checkTrans.push(`Transfer: -$${amount}`);
-        let currIndex = checkTrans.length - 1;
-        document.getElementById("checkingAccount1").innerText = `Balance $${checkingBal.toLocaleString()}`;
-        document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        if(checkingBal >= amount){
+            checkingBal = checkingBal - amount;
+            checkTrans.push(`Transfer: -$${amount}`);
+            let currIndex = checkTrans.length - 1;
+            document.getElementById("checkingAccount1").innerText = `Balance $${checkingBal.toLocaleString()}`;
+            document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        } else {
+            checkTrans.push(`!Transfer: -$${amount} not aloud, insufficient funds!`);
+            let currIndex = checkTrans.length - 1;
+            document.getElementById("checkTransList").innerHTML += `<h4>${checkTrans[currIndex]}</h4>`;
+        }
     }
+
+    goBack(){
+        console.log("in go back");
+        document.getElementById(`welcomePage`).style.display = 'block';
+        document.getElementById(`checkingAccountMore`).style.display = 'none';
+    }
+
 }

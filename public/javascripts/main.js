@@ -1,5 +1,6 @@
 "use strict";
 import EventHandler from './EventHandler.js';
+
 class main {
     constructor() {
         main.prepApp();

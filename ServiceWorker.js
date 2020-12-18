@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v1.00.01';
+const CACHE_VERSION = 'v1.00.03';
 const CACHE_FILES = [
     '/',
     '/public/views/index.ejs',
@@ -9,6 +9,7 @@ const CACHE_FILES = [
     '/public/images/favicon.ico',
     '/public/images/icon.192.png',
     '/public/images/icon.512.png',
+    'public/userInfo.csv'
 ];
 const OFFLINE_URL = "offline.html";
 

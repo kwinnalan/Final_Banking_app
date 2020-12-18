@@ -51,6 +51,11 @@ text-align: center;
     border: 3px solid lightseagreen;
     padding: 2em 1em;
 }
+.backBtn {
+    position:fixed;
+    bottom:5px;
+    right:5px;
+}
 .accountHeading{
     text-shadow: 2px 2px 5px lightseagreen;
 }
