@@ -1,17 +1,23 @@
-'use strict'
+'use strict';
 
 let savingsBal;
 let saveTrans = ["Deposit: +$1,000,000"];
 let amount;
 
+/**
+ * Event handling class for savings account
+ */
     export default class SavingsAccount {
 
         constructor(SAVINGS_BAL) {
+
+            /**
+             * @constructor
+             */
             savingsBal = SAVINGS_BAL;
             console.log("newSavingsAccount");
             document.getElementById("savingsAccount1").innerText = `$${savingsBal.toLocaleString()}`;
             document.getElementById("saveTransList").innerText = `**Transactions**\n\n${saveTrans[0]}`;
-
             document.getElementById('savingsDepBtn').addEventListener('click', () => {
                 let input = document.getElementById('saveAmountInput').value;
                 amount = parseFloat(input);
@@ -47,6 +53,9 @@ let amount;
             document.getElementById("saveTransList").innerHTML += `<h4>${saveTrans[currIndex]}</h4>`;
         }
 
+    /**
+     * @returns {void}
+     */
         debit(amount) {
             if (savingsBal >= amount) {
                 savingsBal = savingsBal - amount;
@@ -61,7 +70,9 @@ let amount;
             }
         }
 
-
+    /**
+     * @returns {void}
+     */
         withdraw(amount) {
                 if(savingsBal >= amount){
                     savingsBal = savingsBal - amount;
@@ -76,6 +87,9 @@ let amount;
                 }
         }
 
+    /**
+     * @returns {void}
+     */
         transfer(amount) {
                 if(savingsBal >= amount){
                     savingsBal = savingsBal - amount;
@@ -90,6 +104,9 @@ let amount;
                 }
         }
 
+    /**
+     * @returns {void}
+     */
         goBack(){
             console.log("in go back");
             document.getElementById(`welcomePage`).style.display = 'block';

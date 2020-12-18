@@ -1,15 +1,18 @@
-const CACHE_VERSION = 'v1.00.03';
+const CACHE_VERSION = 'v1.00.04';
 const CACHE_FILES = [
     '/',
     '/public/views/index.ejs',
-    '/public/views/_header.ejs',
-    '/public/views/_footer.ejs',
+    '/public/views/header.ejs',
+    '/public/views/footer.ejs',
     '/public/css/styles.css',
+    '/public/css/normalize.css',
     '/public/javascripts/main.js',
+    '/public/javascripts/EventHandler',
+    '/public/javascripts/SavingsAccount.js',
+    '/public/javascripts/CheckingAccount.js',
     '/public/images/favicon.ico',
     '/public/images/icon.192.png',
     '/public/images/icon.512.png',
-    'public/userInfo.csv'
 ];
 const OFFLINE_URL = "offline.html";
 

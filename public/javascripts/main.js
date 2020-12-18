@@ -1,7 +1,15 @@
 "use strict";
+
 import EventHandler from './EventHandler.js';
 
+/**
+ * Dispatch class
+ */
 class main {
+
+    /**
+     * @constructor
+     */
     constructor() {
         main.prepApp();
         new EventHandler();
@@ -9,11 +17,18 @@ class main {
         main.handleManifest();
     }
 
+    /**
+     * Prepare the user app user interface
+     * @returns {void}
+     */
     static prepApp() {
         document.getElementById('login').style.display = 'block';
     }
 
-
+    /**
+     *
+     * @returns {Promise<void>}
+     */
 static async loadServiceWorker(){
     if ('serviceWorker' in navigator) {
         await navigator.serviceWorker.register('/ServiceWorker.js').then((registration) => {
@@ -24,6 +39,9 @@ static async loadServiceWorker(){
     }
 }
 
+    /**
+     * @returns {void}
+     */
 static handleManifest(){
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (event) => {
@@ -44,9 +62,12 @@ static handleManifest(){
                 });
         });
     });
-}
+    }
 }
 
+/**
+ * Bootstraps program by instantiating object of Main()
+ */
 window.addEventListener('load', () => {
     new main();
 });

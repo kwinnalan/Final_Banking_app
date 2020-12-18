@@ -1,22 +1,54 @@
-//  todo:
-
-"use strict";
+'use strict';
 
 const DATA_HANDLER = require('./node/DataHandler');
 
+/**
+ * Web server utilizing HTTP/2
+ */
 class app {
+    #data_handler;
+    #ejsData;
+    #fileName;
+
+    /**
+     * @desc instantiates DataHandler object
+     */
     constructor() {
-        this.ejsData = null;
-        this.user = null;
+        this.#data_handler = new DATA_HANDLER();
+        this.#ejsData = null;
+        this.#fileName = 'index.ejs';
         this.loadServer();
+        console.log('Constructed...');
     }
 
+    /**
+     * Route & mime type handler
+     */
     loadServer() {
         const HTTP = require('http');
-        const PORT = 8000;
         const EJS = require('ejs');
+        const HTTP_PORT = process.env.PORT || '80';
+        const HTTP2 = require('http2');
+        const SSL_PORT = process.env.PORT || '443';
+        const SSL_OPTIONS = {
+            key: DATA_HANDLER.getKey(),
+            cert: DATA_HANDLER.getCert(),
+            requestCert: true,
+            rejectUnauthorized: false
 
-        HTTP.createServer((request, response) => {
+        };
+
+        HTTP.createServer(async (request, response) => {
+            console.log(`https://${request.headers['host']}${request.url}`);
+            response.writeHead(301, {
+                'Location': `https://${request.headers['host']}${request.url}`
+            });
+            response.end();
+
+        }).listen(HTTP_PORT);
+
+
+        HTTP2.createSecureServer(SSL_OPTIONS, async (request, response) => {
 
             let httpHandler = (error, string, contentType) => {
                 if (error) {
@@ -28,8 +60,8 @@ class app {
                 } else if (contentType.indexOf('html') >= 0) {
                     response.writeHead(200, {'Content-Type': contentType});
                     response.end(EJS.render(string, {
-                        data: this.ejsData,
-                        filename: 'index.ejs'
+                        data: this.#ejsData,
+                        filename: this.#fileName
                     }));
                 } else {
                     response.writeHead(200, {'Content-Type': contentType});
@@ -38,53 +70,35 @@ class app {
             };
 
             if (request.method === 'POST') {
-                if (request.headers['x-requested-with'] === 'XMLHttpRequest0') {
-                    request.on('data', (data) => {
-                        DATA_HANDLER.handleUserData(data.toString('utf8'), (user) => {
-                            if (user !== 'false') {
-                                response.writeHead(200, {'content-type': 'application/json'});
-                                response.end(user);
-                            } else {
-                                response.writeHead(200, {'content-type': 'text/plain'});
-                                response.end('false');
-                            }
-                        });
-                    });
-                } else if (request.headers['x-requested-with'] === 'XMLHttpRequest1') {
-                    const FORMIDABLE = require('formidable');
-                    let formData = {};
-                    new FORMIDABLE.IncomingForm().parse(request).on('field', (field, name) => {
-                        formData[field] = name;
-                    }).on('error', (err) => {
-                        next(err);
-                    }).on('end', () => {
-                        DATA_HANDLER.addData(formData);
-                        formData = JSON.stringify(formData);
-                        response.writeHead(200, {'content-type': 'application/json'});
-                        response.end(formData);
-                    });
+                if (request.headers['x-requested-with'] === 'fetch.0') {
+                    return await DATA_HANDLER.receiveFile(request, response);
                 } else {
-                    response.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
-                    response.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');
+                    console.log(`Yo, somethings super wrong BDH!`);
                 }
             } else if (request.url.indexOf('.css') >= 0) {
-                this.render(request.url.slice(1), 'text/css', httpHandler, 'utf-8');
+                DATA_HANDLER.renderDom(request.url.slice(1), 'text/css', httpHandler, 'utf-8');
             } else if (request.url.indexOf('.js') >= 0) {
-                this.render(request.url.slice(1), 'application/javascript', httpHandler, 'utf-8');
+                DATA_HANDLER.renderDom(request.url.slice(1), 'application/javascript', httpHandler, 'utf-8');
             } else if (request.url.indexOf('.png') >= 0) {
-                this.render(request.url.slice(1), 'image/png', httpHandler, 'binary');
+                DATA_HANDLER.renderDom(request.url.slice(1), 'image/png', httpHandler, 'binary');
+            } else if (request.url.indexOf('.woff') >= 0) {
+                DATA_HANDLER.renderDom(request.url.slice(1), 'application/font-woff', httpHandler, 'binary');
+            } else if (request.url.indexOf('.woff2') >= 0) {
+                DATA_HANDLER.renderDom(request.url.slice(1), 'application/font-woff2', httpHandler, 'binary');
+            } else if (request.url.indexOf('.ttf') >= 0) {
+                DATA_HANDLER.renderDom(request.url.slice(1), 'application/x-font-truetype', httpHandler, 'binary');
+            } else if (request.url.indexOf('.svg') >= 0) {
+                DATA_HANDLER.renderDom(request.url.slice(1), 'image/svg+xml', httpHandler, 'binary');
+            } else if (request.url.indexOf('.eot') >= 0) {
+                DATA_HANDLER.renderDom(request.url.slice(1), 'application/vnd.ms-fontobject', httpHandler, 'binary');
+            } else if (request.url.indexOf('.ico') >= 0) {
+                DATA_HANDLER.renderDom(request.url.slice(1), 'image/x-icon', httpHandler, 'binary');
             } else if (request.url.indexOf('/') >= 0) {
-                this.render('public/views/index.ejs', 'text/html', httpHandler, 'utf-8');
+                DATA_HANDLER.renderDom('public/views/index.ejs', 'text/html', httpHandler, 'utf-8');
             } else {
-                this.render(`HEY! What you're looking for: It's not here!`, 'text/html', httpHandler, 'utf-8');
+                DATA_HANDLER.renderDom(`HEY! What you're looking for: It's not here!`, 'text/html', httpHandler, 'utf-8');
             }
-        }).listen(PORT);
-    }
-        render(path, contentType, callback, encoding) {
-            const FS = require('fs');
-            FS.readFile(path, encoding ? encoding : 'utf-8', (error, string) => {
-                callback(error, string, contentType);
-            });
+        }).listen(SSL_PORT);
     }
 }
 

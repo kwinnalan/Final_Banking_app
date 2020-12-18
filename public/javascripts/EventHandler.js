@@ -1,16 +1,24 @@
-'use strict'
+'use strict';
+
 import CheckingAccount from './CheckingAccount.js';
 import SavingsAccount from './SavingsAccount.js';
 
 const SAVINGS_BAL = 1000000;
-const CHECKING_BAL = 100000;
+let CHECKING_BAL = 100000;
 
-const USERS = ['kdanforth', 'vdanforth', 'hbates', 'kurt'];
+const USERS = ['kdanforth', 'vdanforth', 'hbates', 'mbrown'];
 const PASSWDS = ['pass123','1234abcd!', 'password1234', 'pass0610'];
 let isUser = false;
 let userId;
 
+/**
+ * Event handling class
+ */
 export default class EventHandler {
+
+    /**
+     * @constructor
+     */
     constructor() {
         this.handleSubmit();
         this.handleMoreChecking();
@@ -19,6 +27,9 @@ export default class EventHandler {
         this.user = null;
     }
 
+    /**
+     * @returns {void}
+     */
     handleSubmit() {
         document.getElementById('submit').addEventListener('click',  () => {
             let userInfo = [];
@@ -34,7 +45,7 @@ export default class EventHandler {
                 document.getElementById(`installBanner`).style.display = 'none';
                 document.getElementById(`login`).style.display = 'none';
                 document.getElementById('welcomeUsername').innerText = `Welcome ${username}`;
-                document.getElementById("checkingAccount").innerText = `$${CHECKING_BAL.toLocaleString()}`;
+                document.getElementById("checkingAccount").innerText = `$${this.checkingBal.toLocaleString()}`;
                 document.getElementById("savingsAccount").innerText = `$${SAVINGS_BAL.toLocaleString()}`;
                 document.getElementById(`welcomePage`).style.display = 'block';
                 this.user = userInfo[0];
@@ -44,6 +55,9 @@ export default class EventHandler {
         });
     }
 
+    /**
+     * @returns {void}
+     */
     checkUser(userInfo){
         for(let i =0; i < USERS.length; i++){
             if(userInfo === USERS[i]){
@@ -58,6 +72,9 @@ export default class EventHandler {
        return document.getElementById('pwd').value === PASSWDS[userId];
 }
 
+    /**
+     * @returns {void}
+     */
     handleMoreChecking() {
        document.getElementById("moreChecking").addEventListener('click',  () => {
            console.log('clicked More Checking');
@@ -67,6 +84,9 @@ export default class EventHandler {
         });
     }
 
+    /**
+     * @returns {void}
+     */
     handleMoreSavings() {
         document.getElementById("moreSavings").addEventListener('click',  () => {
             console.log('clicked More Savings');
@@ -76,6 +96,9 @@ export default class EventHandler {
         });
     }
 
+    /**
+     * @returns {void}
+     */
     stopEnterKey() {
         document.addEventListener('keypress', function(event) {
             const theKey = event.key;
@@ -87,6 +110,9 @@ export default class EventHandler {
         });
     }
 
+    /**
+     * @returns {void}
+     */
     static #preventDefaults(event) {
         event.preventDefault();
         event.stopPropagation();
