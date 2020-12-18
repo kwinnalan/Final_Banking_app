@@ -45,7 +45,7 @@ export default class EventHandler {
                 document.getElementById(`installBanner`).style.display = 'none';
                 document.getElementById(`login`).style.display = 'none';
                 document.getElementById('welcomeUsername').innerText = `Welcome ${username}`;
-                document.getElementById("checkingAccount").innerText = `$${this.checkingBal.toLocaleString()}`;
+                document.getElementById("checkingAccount").innerText = `$${CHECKING_BAL.toLocaleString()}`;
                 document.getElementById("savingsAccount").innerText = `$${SAVINGS_BAL.toLocaleString()}`;
                 document.getElementById(`welcomePage`).style.display = 'block';
                 this.user = userInfo[0];
